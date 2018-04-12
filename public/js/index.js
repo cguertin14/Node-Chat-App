@@ -6,11 +6,6 @@ socket.on('connect', function () {
     socket.on('newMessage', function(newMessage) {
         console.log('New Message', newMessage);
     });
-    
-    socket.emit('createMessage', {
-        from: 'el bini',
-        text: 'Allo'
-    });
 });
 
 socket.on('disconnect', function () {
