@@ -1,0 +1,23 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "Node Chat App in the node course.",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node server/server.js",
+    "nodemon": "nodemon server/server.js --exec babel-node"
+  },
+  "author": "Charles Guertin",
+  "license": "ISC",
+  "engines": {
+    "node": "9.11.1"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}
