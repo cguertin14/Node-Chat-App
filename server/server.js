@@ -2,7 +2,7 @@ import path from 'path';
 import http from 'http';
 import express from 'express';
 import socketIO from 'socket.io';
-import { generateMessage } from './utils/message';
+import { generateMessage, generateLocationMessage } from './utils/message';
 
 // Public path.
 const publicPath = path.join(__dirname, '../public')
@@ -28,11 +28,10 @@ io.on('connection',(socket) => {
         console.log('Create Message',newMessage);
         io.emit('newMessage', generateMessage(newMessage.from,newMessage.text));
         callback('This if from the server');
+    });
 
-        // socket.broadcast.emit('newMessage', {
-        //     ...newMessage,
-        //     createdAt: new Date().getTime()
-        // })
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude, coords.longitude));
     });
 
     socket.on('disconnect',() => {
