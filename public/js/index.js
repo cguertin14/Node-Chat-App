@@ -4,16 +4,19 @@ socket.on('connect', function () {
     console.log('Connected to the server');
 
     socket.on('newMessage', function(newMessage) {
+
+        let formattedTime = moment(newMessage.createdAd).format('h:mm a');
         let li = $('<li></li>');
-        li.text(`${newMessage.from}: ${newMessage.text}`);
+        li.text(`${newMessage.from} ${formattedTime}: ${newMessage.text}`);
         $('#messages').append(li);
     });
 
     socket.on('newLocationMessage', function(newLocatioMessage) {
+        let formattedTime = moment(newLocatioMessage.createdAd).format('h:mm a');
         let li = $('<li></li>');
         let a = $('<a target="_blank">My current location</a>');
         
-        li.text(`${newLocatioMessage.from}: `);
+        li.text(`${newLocatioMessage.from} ${formattedTime}: `);
         a.attr('href',newLocatioMessage.url);
         li.append(a);
         $('#messages').append(li);
