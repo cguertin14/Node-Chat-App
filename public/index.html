@@ -3,60 +3,31 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>node-chat-app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Join | ChatApp</title>
 
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<body class="chat">
-    <div class="chat__sidebar">
-        <h3>People</h3>
-        <div id="users"></div>
+<body class="centered-form">
+    <div class="centered-form__form">
+        <form action="/chat.html">
+            <div class="form-field">
+                <h3>Join a Chat</h3>
+            </div>
+            <div class="form-field">
+                <label>Display Name</label>
+                <input type="text" name="name" autofocus required>
+            </div>
+            <div class="form-field">
+                <label>Room Name</label>
+                <input type="text" name="room" required>
+            </div>
+            <div class="form-field">
+                <button type="submit">Join</button>
+            </div>
+        </form>
     </div>
-
-    <div class="chat__main">
-        <ol id="messages" class="chat__messages"></ol>
-
-        <div class="chat__footer">
-            <form id="message-form">
-                <input type="text" name="message" placeholder="Message" required autofocus autocomplete="off" />
-                <button type="submit">Send</button>
-            </form>
-            <button id="send-location">Send Location</button>
-        </div>
-    </div>
-
-    <script id="message-template" type="text/template">
-        <li class="message">
-            <div class="message__title">
-                <h4>{{ from }}</h4>
-                <span>{{ createdAt }}</span>
-            </div>
-            <div class="message__body">
-                <p>{{ text }}</p>
-            </div>
-        </li>
-    </script>
-
-    <script id="location-message-template" type="text/template">
-        <li class="message">
-            <div class="message__title">
-                <h4>{{ from }}</h4>
-                <span>{{ createdAt }}</span>
-            </div>
-            <div class="message__body">
-                <a href="{{ url }}" target="_blank">{{ text }}</a>
-            </div>
-        </li>
-    </script>
 </body>
-
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/libs/jquery-3.3.1.min.js"></script>
-<script src="/js/libs/moment.js"></script>
-<script src="/js/libs/mustache.js"></script>
-<script src="./js/index.js"></script>
 
 </html>
