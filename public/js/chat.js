@@ -14,41 +14,56 @@ function scrollToBottom() {
     if ((scrollTop + clientHeight + newMessageHeight + lastMessageHeight) >= scrollHeight) {
         messages.animate({ scrollTop: scrollHeight }, 500);
     }   
-
-
 }
 
 socket.on('connect', function () {
-    console.log('Connected to the server');
-
-    socket.on('newMessage', function(newMessage) {
-        let createdAt = moment(newMessage.createdAt).format('h:mm a');
-        let template = $('#message-template').html();
-        let html = Mustache.render(template, {
-            from: newMessage.from,
-            text: newMessage.text,
-            createdAt
-        });
-        $('#messages').append(html);
-        scrollToBottom();
-    });
-
-    socket.on('newLocationMessage', function(newLocatioMessage) {
-        let createdAt = moment(newLocatioMessage.createdAt).format('h:mm a');
-        let template = $('#location-message-template').html();
-        let html = Mustache.render(template, {
-            from: newLocatioMessage.from,
-            text: 'My current location',
-            url: newLocatioMessage.url,
-            createdAt
-        });
-        $('#messages').append(html);
-        scrollToBottom();
+    let params = $.deparam(window.location.search);
+    socket.emit('join',params, function(err) {
+        if (err) {
+            alert(err);
+            window.location.href = '/';
+        } else {
+            // No error.
+        }
     });
 });
 
 socket.on('disconnect', function () {
     console.log('Disconnected from server');
+});
+
+socket.on('updateUsersList', function(users) {
+    console.log(users);
+    let ol = $('<ol></ol>');
+    users.forEach(function(user) {
+        ol.append($('<li></li>').text(user));
+    });
+    $('#users').html(ol);
+});
+
+socket.on('newMessage', function(newMessage) {
+    let createdAt = moment(newMessage.createdAt).format('h:mm a');
+    let template = $('#message-template').html();
+    let html = Mustache.render(template, {
+        from: newMessage.from,
+        text: newMessage.text,
+        createdAt
+    });
+    $('#messages').append(html);
+    scrollToBottom();
+});
+
+socket.on('newLocationMessage', function(newLocatioMessage) {
+    let createdAt = moment(newLocatioMessage.createdAt).format('h:mm a');
+    let template = $('#location-message-template').html();
+    let html = Mustache.render(template, {
+        from: newLocatioMessage.from,
+        text: 'My current location',
+        url: newLocatioMessage.url,
+        createdAt
+    });
+    $('#messages').append(html);
+    scrollToBottom();
 });
 
 $('#message-form').on('submit',function(e) {
